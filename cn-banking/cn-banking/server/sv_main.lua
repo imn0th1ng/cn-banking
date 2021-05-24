@@ -6,7 +6,6 @@ end)
 
 local firstname = ""
 local lastname = ""
-local webhook = exports["inv-base"]:getwebhooks()
 RegisterServerEvent("banking:get-infos")
 AddEventHandler("banking:get-infos", function()
     local src = source
@@ -38,8 +37,6 @@ AddEventHandler("banking:withdraw", function(amount, comment, date)
 
     Save(ply, amount, comment, date, type, sender, target, iden)
     TriggerClientEvent("banking:refresh", src)
-    local discord2 = exports["inv-base"]:getid(xPlayer.source)["discord"]
-    exports["inv-base"]:dclog(webhook.banka, "Banka Log", xPlayer.getName().." ["..xPlayer.identifier.."] kişisi **çekme** işlemi yapmıştır. Çektiği miktar: **"..amount.."**\n**Discord ID**: "..discord2)
     if comment == nil then
         comment = ""
     end
@@ -60,8 +57,6 @@ AddEventHandler("banking:deposit", function(amount, comment, date)
 
     Save(ply, amount, comment, date, type, sender, target, iden)
     TriggerClientEvent("banking:refresh", src)
-    local discord2 = exports["inv-base"]:getid(xPlayer.source)["discord"]
-    exports["inv-base"]:dclog(webhook.banka, "Banka Log", xPlayer.getName().." ["..xPlayer.identifier.."] kişisi **yatırma** işlemi yapmıştır. Yatırdığı miktar: **"..amount.."**\n**Discord ID**: "..discord2)
     if comment == nil then
         comment = ""
     end
@@ -95,8 +90,6 @@ AddEventHandler("banking:transfer", function(amount, comment, id, date)
     end
     xPlayer.removeAccountMoney('bank', amount)
     zPlayer.addAccountMoney('bank', amount)
-    local discord2 = exports["inv-base"]:getid(xPlayer.source)["discord"]
-    exports["inv-base"]:dclog(webhook.banka, "Banka Log", xPlayer.getName().." ["..xPlayer.identifier.."] kişisi "..zPlayer.getName().." ["..xPlayer.identifier.."] kişisine **"..amount.."** havale yapmıştır\n**Discord ID**: "..discord2)
     Save(ply, amount, comment, date, type, sender, target, iden)
     ply = ESX.GetPlayerFromId(id).getIdentifier()
     type = "pos"
